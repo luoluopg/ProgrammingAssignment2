@@ -9,9 +9,9 @@
                  inv <<- NULL
                 }
         get <- function () x     ## get the matrix
-        setinv <- function (solve) inv <<- inverse  ##set the inverse
-        getinv <- function () inv   ## get the inverse
-        list(set = set, get = get, setinv = setinv, getinv = getinv)  ## this list is the input of cacheSolve
+        setsol <- function (solve) inv <<- solve  ##set the inverse
+        getsol <- function () inv   ## get the inverse
+        list(set = set, get = get, setsol = setsol, getsol = getsol)  ## this list is the input of cacheSolve
   }
   
   
@@ -22,7 +22,7 @@
   
   cacheSolve <- function(x, ...) {
           ## Return a matrix that is the inverse of 'x'
-         inv <- X$getinv()
+         inv <- X$getsol()
         ## if the inverse has already been calculated, then get the inverse from the cache and skip the computation
          if (!is.null(inv)){
          message("getting cached data")
@@ -30,8 +30,8 @@
          }
         ## if not, then calculate the inverse
          data <- x$get()      
-         inv <- Solve(data, ...)
+         inv <- solve(data, ...)
          ## use the setinv function to set the inverse
-        x$setinv(inv)
+        x$setsol(inv)
         inv    ##return the inserse of matrix
   }
